@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+        <button class="sidebar-toggle" onclick="toggleSidebar()">☰</button>
+        <div class="color-picker">
+            <span class="color-trigger" onclick="toggleColorOptions()">&#10247;</span>
+            <div class="color-options" id="colorOptions">
+                <div class="color-option" onclick="changeHeaderColor('pink')" style="background-color: #FFC0CB;"></div>
+                <div class="color-option" onclick="changeHeaderColor('violet')" style="background-color: #EE82EE;"></div>
+                <div class="color-option" onclick="changeHeaderColor('#f8f8a9')" style="background-color: #f8f8a9;"></div>
+                <div class="color-option" onclick="changeHeaderColor('#00aeff')" style="background-color: #00aeff;"></div>
+                <div class="color-option" onclick="changeHeaderColor('gray')" style="background-color: #808080;"></div>
+                <div class="color-option" onclick="changeHeaderColor('#3b3b3b71')" style="background-color: #3b3b3b71;"></div>
+            </div>
+        </div> 
+        <div>
+            <h1 class="logo"><i class="fa-solid fa-sheet-plastic"></i></h1>
+            <h1>Sticky Task</h1>
+            <p>Write what you want</p>
+        </div>
+        <div class="dashboard">
+            <a href="{% url 'main' %}">
+                <p>Dashboard</p>
+            </a>
+        </div>
+        <div class="button-block">
+            <a href="{% url 'event' %}">Event</a>
+            <a href="{% url 'school' %}">School</a>
+            <a href="{% url 'shopping' %}">Shopping</a>
+            <a href="{% url 'work' %}">Work</a>
+        </div>
+        <div class="logout-container">
+            {% if request.user.is_authenticated %}
+            <a href="{% url 'logout' %}"><i class="fa-solid fa-arrow-right-from-bracket"></i> Logout</a> {% else %}
+            <a href="{% url 'login' %}">Login</a> {% endif %}
+        </div>
+</body>
+</html>

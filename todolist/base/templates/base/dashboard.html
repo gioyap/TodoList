@@ -1,0 +1,112 @@
+{% extends 'base/main.html' %} 
+{% block content %}
+
+<script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
+<script src="https://kit.fontawesome.com/800bf72935.js" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+
+<div class="sidebar" id="sidebar">
+    {% include 'base/sidebar.html' %}
+</div>
+
+<div class="body-color">
+    <div class="shortcut">
+        <h1>Sticky Task</h1>
+        <div class="options">
+            <a href="{% url 'event' %}">Event</a>
+            <a href="{% url 'school' %}">School</a>
+            <a href="{% url 'shopping' %}">Shopping</a>
+            <a href="{% url 'work' %}">Work</a>
+        </div>
+    </div>
+    <div class="cards">
+        <div class="container">
+            <div class="row">
+                <div class="card">
+                    <p>In essence, sticky notes are versatile tools that offer a simple and tangible way to manage information, communicate ideas, and stay organized in various personal and professional settings.</p>
+                </div>
+                <div class="card">
+                    <h2>Tasks for Today</h2>
+                    <ul>
+                        {% for task in today_tasks %}
+                            <li>{{ task.title }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <div class="card">
+                    <h2>Complete Task for Week</h2>
+                    <ul>
+                        {% for task in week_completed_tasks %}
+                            <li>{{ task.title }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+    
+                <div class="card">
+                    <h2>Complete Task for Today</h2>
+                    <ul>
+                        {% for task in today_completed_tasks %}
+                            <li>{{ task.title }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+                <div class="Chart">
+                    <canvas id="myChart"></canvas>
+                </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Load the saved color or use a default color
+    const savedColor = localStorage.getItem('headerBarColor');
+    const sidebar = document.getElementById('sidebar');
+    sidebar.style.backgroundColor = savedColor || '#12b8ce';
+
+    function toggleColorOptions() {
+        const colorOptions = document.getElementById('colorOptions');
+        colorOptions.style.display = colorOptions.style.display === 'none' ? 'block' : 'none';
+    }
+
+    function changeHeaderColor(color) {
+        sidebar.style.backgroundColor = color;
+        localStorage.setItem('headerBarColor', color);
+        // Optionally, hide the color options after a color is selected
+        document.getElementById('colorOptions').style.display = 'none';
+    }
+    function toggleSidebar() {
+            const sidebar = document.querySelector('.sidebar');
+            sidebar.classList.toggle('show');
+        }
+    function toggleDropdown(dropdownId) {
+        var dropdown = document.getElementById(dropdownId + 'Dropdown');
+        dropdown.style.display = (dropdown.style.display === 'block') ? 'none' : 'block';
+    }    
+</script>
+
+<script>
+    const ctx = document.getElementById('myChart');
+  
+    new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+        datasets: [{
+          label: '# of Votes',
+          data: [12, 19, 3, 5, 2, 3],
+          borderWidth: 1
+        }]
+      },
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        }
+      }
+    });
+  </script>
+
+{% endblock content %}
