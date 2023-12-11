@@ -91,7 +91,7 @@ class TaskDeleteWorkView(LoginRequiredMixin, DeleteView):
     def get_queryset(self):
         return Task.objects.filter(user=self.request.user)
 
-class SchoolTaskReorder(View):
+class WorkTaskReorder(View):
     def post(self, request):
         form = PositionForm(request.POST)
 
